@@ -1,0 +1,7 @@
+# Backend dependencies - all versions pinned for reproducible Docker builds
+fastapi==0.115.4
+uvicorn==0.32.0
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.10
+scikit-learn==1.5.2
+redis==5.2.0
