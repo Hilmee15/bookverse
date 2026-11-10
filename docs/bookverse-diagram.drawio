@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net">
+  <diagram id="bookverse" name="BookVerse">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1"
+      connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826">
+      <root>
+        <mxCell id="0"/><mxCell id="1" parent="0"/>
+        <mxCell id="net" value="booknet — user-defined bridge network" style="rounded=1;dashed=1;fillColor=#F5F5F4;strokeColor=#999999;verticalAlign=top;fontStyle=1;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="260" y="70" width="760" height="480" as="geometry"/>
+        </mxCell>
+        <mxCell id="browser" value="Browser&#10;(pengguna)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF7ED;strokeColor=#D97706" vertex="1" parent="1">
+          <mxGeometry x="60" y="240" width="120" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="fe" value="frontend&#10;nginx + React (static)&#10;:80 → localhost:3000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EFF6FF;strokeColor=#2563EB" vertex="1" parent="1">
+          <mxGeometry x="320" y="120" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="be" value="backend&#10;FastAPI + TF-IDF&#10;:8000 → localhost:8000" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F0FDF4;strokeColor=#16A34A" vertex="1" parent="1">
+          <mxGeometry x="610" y="115" width="180" height="90" as="geometry"/>
+        </mxCell>
+        <mxCell id="redis" value="redis&#10;Redis 7 (cache, TTL 300s)&#10;:6379 — internal only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626" vertex="1" parent="1">
+          <mxGeometry x="820" y="330" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="db" value="db&#10;PostgreSQL 16&#10;:5432 — internal only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAF5FF;strokeColor=#9333EA" vertex="1" parent="1">
+          <mxGeometry x="580" y="330" width="170" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="adminer" value="adminer (profile tools)&#10;:8080 → localhost:8080" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F8FAFC;strokeColor=#64748B;dashed=1" vertex="1" parent="1">
+          <mxGeometry x="320" y="440" width="170" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="volpg" value="volume pgdata&#10;/var/lib/postgresql/data" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#FAF5FF;strokeColor=#9333EA;size=10" vertex="1" parent="1">
+          <mxGeometry x="600" y="455" width="130" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="volrd" value="volume redisdata&#10;/data (AOF)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#FEF2F2;strokeColor=#DC2626;size=10" vertex="1" parent="1">
+          <mxGeometry x="840" y="455" width="130" height="70" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="1 · HTTP localhost:3000" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10" edge="1" parent="1" source="browser" target="fe">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="2 · reverse proxy /api/* → backend:8000" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10" edge="1" parent="1" source="fe" target="be">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="3 · cek / tulis cache :6379" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10" edge="1" parent="1" source="be" target="redis">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="4 · baca katalog + simpan riwayat :5432" style="edgeStyle=orthogonalEdgeStyle;html=1;fontSize=10" edge="1" parent="1" source="be" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="mount" style="html=1;fontSize=9;dashed=1;strokeColor=#9333EA" edge="1" parent="1" source="db" target="volpg">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="mount" style="html=1;fontSize=9;dashed=1;strokeColor=#DC2626" edge="1" parent="1" source="redis" target="volrd">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="ops (opsional)" style="html=1;fontSize=9;dashed=1;strokeColor=#64748B" edge="1" parent="1" source="adminer" target="db">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

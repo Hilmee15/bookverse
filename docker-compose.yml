@@ -1,24 +1,14 @@
-# ============================================================
-# BookVerse - full stack on localhost
-#
-#   docker compose up -d --build
-#   frontend  -> http://localhost:3000
-#   backend   -> http://localhost:8000/docs
-#   adminer   -> docker compose --profile tools up -d
-#                http://localhost:8080
-# ============================================================
-
 services:
   # ---------- Database (tier 3) ----------
   db:
-    image: postgres:16.4-alpine          # version-specific tag, not latest
+    image: postgres:16.4-alpine          
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - pgdata:/var/lib/postgresql/data  # named volume -> data survives `down`
-    healthcheck:                          # used by depends_on below
+      - pgdata:/var/lib/postgresql/data  
+    healthcheck:                          
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
@@ -27,7 +17,6 @@ services:
       - booknet
     restart: unless-stopped
 
-  # ---------- Cache, bonus (+5), really used by the app ----------
   redis:
     image: redis:7.4.1-alpine
     command: ["redis-server", "--appendonly", "yes"]
@@ -44,29 +33,29 @@ services:
 
   # ---------- Backend API (tier 2) ----------
   backend:
-    build: ./backend                       # multi-stage Dockerfile
+    build: ./backend                       
     environment:
-      DATABASE_URL: ${DATABASE_URL}        # host is the service name "db"
-      REDIS_URL: ${REDIS_URL}              # host is the service name "redis"
+      DATABASE_URL: ${DATABASE_URL}        
+      REDIS_URL: ${REDIS_URL}              
       CACHE_TTL_SECONDS: ${CACHE_TTL_SECONDS:-300}
     depends_on:
       db:
-        condition: service_healthy         # wait until DB is really ready
+        condition: service_healthy         
       redis:
         condition: service_healthy
     ports:
-      - "8000:8000"                        # for curl / Postman / Swagger UI
+      - "8000:8000"                        
     networks:
       - booknet
     restart: unless-stopped
 
   # ---------- Frontend (tier 1) ----------
   frontend:
-    build: ./frontend                      # node build -> nginx runtime
+    build: ./frontend                      
     depends_on:
       - backend
     ports:
-      - "3000:80"                          # nginx proxies /api -> backend
+      - "3000:80"                          
     networks:
       - booknet
     restart: unless-stopped
@@ -83,12 +72,10 @@ services:
     networks:
       - booknet
 
-# User-defined network: containers reach each other by service name
 networks:
   booknet:
     driver: bridge
 
-# Named volumes managed by Docker, decoupled from containers
 volumes:
   pgdata:
   redisdata:
