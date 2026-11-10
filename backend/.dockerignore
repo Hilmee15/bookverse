@@ -1,0 +1,13 @@
+# Never send these to the Docker build context
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+.git/
+.gitignore
+*.md
+Dockerfile
+.dockerignore
