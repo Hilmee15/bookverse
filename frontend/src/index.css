@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+  background-color: #e6d9be;
+}
+
+/* Parchment scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #efe7d6;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9b795;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ab9670;
+}
+
+/*
+ * Subtle Hogwarts-style stone-wall pattern.
+ * Inline SVG data URI (no external asset, works offline). Rows of offset,
+ * rounded stones drawn as hairline "mortar" strokes over a flat base color —
+ * deliberately low-contrast so it reads as texture, not decoration.
+ */
+.stone-wall {
+  background-color: #f4eddf;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='96'%3E%3Cg fill='none' stroke='%23E0D3B9' stroke-width='2'%3E%3Crect x='2' y='2' width='62' height='28' rx='6'/%3E%3Crect x='70' y='2' width='48' height='28' rx='6'/%3E%3Crect x='124' y='2' width='34' height='28' rx='6'/%3E%3Crect x='2' y='34' width='40' height='28' rx='6'/%3E%3Crect x='48' y='34' width='66' height='28' rx='6'/%3E%3Crect x='120' y='34' width='38' height='28' rx='6'/%3E%3Crect x='2' y='66' width='58' height='28' rx='6'/%3E%3Crect x='66' y='66' width='46' height='28' rx='6'/%3E%3Crect x='116' y='66' width='42' height='28' rx='6'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Same masonry, tuned for the dark leather section */
+.stone-wall-dark {
+  background-color: #231911;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='96'%3E%3Cg fill='none' stroke='%23342618' stroke-width='2'%3E%3Crect x='2' y='2' width='62' height='28' rx='6'/%3E%3Crect x='70' y='2' width='48' height='28' rx='6'/%3E%3Crect x='124' y='2' width='34' height='28' rx='6'/%3E%3Crect x='2' y='34' width='40' height='28' rx='6'/%3E%3Crect x='48' y='34' width='66' height='28' rx='6'/%3E%3Crect x='120' y='34' width='38' height='28' rx='6'/%3E%3Crect x='2' y='66' width='58' height='28' rx='6'/%3E%3Crect x='66' y='66' width='46' height='28' rx='6'/%3E%3Crect x='116' y='66' width='42' height='28' rx='6'/%3E%3C/g%3E%3C/svg%3E");
+}
